@@ -1309,6 +1309,30 @@
                 })
                 .xAxis().ticks(5).tickFormat(d3.format("d"));
 
+	incidentChart2
+                .width(360)
+                .height(180)
+                .margins({top: 80, right: 50, bottom: 30, left: 60})
+                .dimension(years)
+                .group(crimeIncidentByYear, "Non-Violent Crime")
+                .valueAccessor(function(d) {
+                    return d.value.nonViolentCrimeAvg;
+                })
+                .stack(crimeIncidentByYear, "Violent Crime", function(d){return d.value.violentCrimeAvg;})
+                .x(d3.scale.linear().domain([1997, 2012]))
+                .renderHorizontalGridLines(true)
+                .centerBar(true)
+                .elasticY(true)
+                .brushOn(false)
+                .legend(dc.legend().x(250).y(10))
+                .title(function(d){
+                    return d.key
+                            + "\nViolent crime per 100k population: " + Math.round(d.value.violentCrimeAvg)
+                            + "\nNon-Violent crime per 100k population: " + Math.round(d.value.nonViolentCrimeAvg);
+                })
+                .xAxis().ticks(5).tickFormat(d3.format("d"));    
+	    
+	    
         homicideChart
                .width(360)
                 .height(150)
