@@ -1,184 +1,568 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-
- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
-    <style type="text/css">
-        .leaflet-container{background-color:#c5e8ff;}
-    </style>
-
-
-    <title>dc.js - Filtering Example</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/dc.css"/>
-    <style>
-      #table td {
-        padding-left: 10px;
+<html>
+    <head>
+        <title>Situation Mali</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		
+		
+		
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/dc.css"/>
+        <link rel="stylesheet" type="text/css" href="css/site.css"/>
+        <script src="js/jquery.js"></script>
+        <script src="js/d3.min.js"></script>
+        <script src="js/crossfilter.v1.min.js"></script>
+        <script src="js/dc.js"></script> 
+		<script src="adm3.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<style>
+	
+    
+	*body {
+		margin-right:50px;
+		
+		margin-bottom:50px;
+		background-color:#ffffff;
       }
-    </style>
-</head>
-<body>
+	  div {
+      color:#E54143;
+      }
+	  
+	  g {
+      color:#464749;
+      }
+	  gb {
+      color:#464749;
+	  font-weight:bold;
+	  font-size:14px;
+      }
+	    gc {
+      color:#464749;
+	  font-weight:bold;
+	  font-size:10px;
+      }
+  
+  </style> 
 
-<div id="map" style="width: 600px; height: 400px"></div>
+    </head>
+     <body>
+		<nav class="navbar navbar-inverse navbar-static-top" style="background:#0072bc">
+			<div class="container">
+		  	
+        <div class="navbar-header">
+				
+               <h2 style="font-size:22px;color:#fff;margin-top:10px;margin-left:-40px;padding-right: 50px">Niger - Région de Diffa - 6W     </h2>
+        </div>
+		
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				
+				<li><a href="../NER_sites/index.html" style="font-weight: bold">Accueil</a></li>
+							
+				<li class="dropdown">
+					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-weight: bold">Web maps<span class="caret"></span></a>
+					  <ul class="dropdown-menu" role="menu">
+							
+							<li><a href="../NER_sites/infras.html" >Infrastructures</a></li>
+							<li><a href="../NER_sites/population.html" >Population déplacée DREC</a></li>
+							
+							
+					  </ul>
+				</li>
+				
+				
+				<!--<li class="dropdown">
+					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Factsheets<span class="caret"></span></a>
+					  <ul class="dropdown-menu" role="menu">
+							<li><a href="http://www.reachresourcecentre.info/system/files/resource-documents/reach_ner_hcr_factsheet_chetimariinfrastructuremapping_mar2017.pdf" target="blank">Commune de Chetimari</a></li>
+							
+					  </ul>
+				</li>-->
+				<li><a href="docs.html" style="font-weight: bold">Documents</a></li>
+				<!--<li class="dropdown">
+					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Documents<span class="caret"></span></a>
+					  <ul class="dropdown-menu" role="menu">
+							<li><a href="http://www.reachresourcecentre.info/system/files/resource-documents/reach_ner_report_evaluation_rapide_sur_les_comites_de_protection_a_diffa_december_2016.pdf" target="blank">Rapport Protection décembre 2016</a></li>
+							<li><a href="http://www.reachresourcecentre.info/system/files/resource-documents/reach_ner_report_evaluation_eha_dans_la_region_de_diffa_aout_2016.pdf" target="blank">Rapport WASH août 2016</a></li>
+							<li><a href="http://www.reachresourcecentre.info/system/files/resource-documents/reach_ner_report_gas_assessment_report_july_2016_v2_1.pdf" target="blank">Rapport gaz juillet 2016</a></li>
+							<li><a href="http://www.reachresourcecentre.info/system/files/resource-documents/reach_ner_rapport_evaluation_en_abris_dans_la_region_de_diffa_final.pdf" target="blank">Rapport abris janvier 2016</a></li>
+							<li><a href="http://www.reachresourcecentre.info/system/files/resource-documents/reach_ner_diffa_ref_17juin2016_a0_v1.pdf" target="blank">Carte de référence A0</a></li>
+							
+						</ul>
+				</li>	-->
+				<li class="dropdown">
+					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-weight: bold">Liens<span class="caret"></span></a>
+					  <ul class="dropdown-menu" role="menu">
+							<li><a href="http://unhcrniger.tumblr.com/" target="blank">UNHCR Niger</a></li>
+							<li><a href="http://data.unhcr.org/SahelSituation/region.php?id=71&country=502" target="blank">UNHCR Opération Sahel</a></li>
+							<li><a href="http://www.reach-initiative.org/" target="blank">REACH</a></li>
+							<li><a href="http://www.reachresourcecentre.info/countries/niger" target="blank">Resource Centre REACH</a></li>
+							
+					  </ul>
+				</li>	
+				
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li style="top:2px; right:10px"><img src="images/niger.png" width="70" height="47"><li>	
+				<!--<li><a> </a></li>-->
+				<li style="top:10px"><img src="images/unhcr_white1.png" width="110" height="30"style="border-width:5px;"><li>	
+				<!--<li><a> </a></li>
+				<li style="top:10px"><img src="image/REACH_logo.png" width="125" height="29"style="border-width:10px;"><li>	-->
+								
+			</ul>
+        </div><!--/.nav-collapse -->
+       
+      </div>
+    </nav>   
+	 
+	 
+        <div class="container" >
+			
+			
+            <div class="row" style="margin-left:50px">
+                <div class="col-md-3">
+                     <p>Dernière actualisation: 05/05/2017 </p>
+				<a href="REACH_Matrice_6W_REACH_Diffa_Mars_2017.xlsx"><h6>Télécharger la matrice 6w mars 2017</h6></a>
+					<a href="REACH_Matrice_6W_Diffa_Globale_Janvier-Novembre_2016.xlsx"><h6>Télécharger la matrice global 2016</h6></a>
+					
+                </div>
+				
+				
+               
+				<div class="col-md-9">  
+					<g>Bienvenue sur la page du tableau de bord interactif des activités en faveur des réfugiés et populations déplacées dans la région de Diffa. Cliquez sur les différents éléments pour sélectionner les informations qui vous intéressent. Tous les éléments sont sélectionnables et permettent d’effectuer des recherches par département, commune, organisation, bailleur, secteur d’activité, état des activités et population bénéficiaire. Pour revenir au début et réinitialiser les filtres, cliquez sur « Reset All ». </g>	
+				</div> 
+            </div>
+			<div class="row"  align="right" style="margin-left:50px">
+				 <div class="col-md-6">     </div>
+				<div class="col-md-6" id="count-info" >  
+						<h4>mars 2017 : <span class="filter-count"></span>  activités selectionnées sur <span class="total-count"></span> au total</h4>
+				</div> 	
+			</div>
+			 <div class="row" style="margin-left:50px">
+                   
+                    <div class="col-md-8" id="map"style="stroke:Black">  
+						
+					</div>
+					<div class="col-md-4"  align="right"> 	
+						<a class="reset btn btn-primary btn-sm" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
+					</div> 	
+            </div> 
+			<div class="row" style="margin-left:50px">
+					<div class="col-md-12"">  
+						<h4><gb>Secteur d'activité</gb></h4>
+						<div id="sector" class="col-md-12"></div>
+					</div>	
+			</div> 
+			<div class="row" style="margin-left:50px">
+					<div class="col-md-10" >  
+						<h4></h4>
+						<div  class="col-md-12"></div>
+					</div>	
+					<div class="col-md-2" align="right">
+						<a class="reset btn btn-primary btn-sm" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
+					</div>				
+						
+			</div>
+			<div class='row' style="margin-left:50px">
+					<div class="col-md-3" align="middle">
+							<h4><gb>Organisation</gb></h4>
+							<div id="organisation"></div>   
+					</div>
+					
+					<div class="col-md-6">
+							<div class="row">
+								<div class="col-md-6" align="middle">
+									<h4><gb>Département</gb></h4>
+									<div id="departement" class="col-xs-12"></div>                    
+								</div>   
+								<div class="col-md-6" align="middle">
+									<h4><gb>Commune</gb></h4>
+									<div id="commune" class="col-xs-12"></div>  
+								</div>	
+							</div>	
+							<div class="row">
+								<div class="col-xs-6" align="middle">
+									<h4><gb>Etat des activités</gb></h4>
+									<div id="etat" class="col-md-12"></div>                    
+								</div>   
+								<div class="col-xs-6" align="middle">	
+									<h4><gb>Population Bénéficiaire</gb></h4>
+									<div id="activity" class="col-md-12"></div>   	
+								</div>	
+							</div>
+							
+					</div>
+					<div class="col-md-3" align="middle">
+							<h4><gb>Bailleur</gb></h4>	
+							<div id="bailleur" ></div>
+							<div class="row" align="middle"></div>	
+							<div class="row" align="middle">
+								<gc>UNHCR* : Appuyé par BPRM, ECHO, DFID, AECID, CERF et le Gouvernement du Japon</gc>
+							 </div>	 
+					</div>
+							
+					
+			</div>
+			<div class='row' style="margin-left:50px">
+				<div  class="col-xs-4"  >
+					<a href="mailto:christian.keller@reach-initiative.org" target="_blank">
+						<img  src="images/mail.png" alt="mail"  width="80px">
+					
+					<a style="display:inline;padding-left:0.8em" href="mailto:christian.keller@reach-initiative.org" target="_blank" >christian.keller@reach-initiative.org</a>
+				</div>
+				<div  class="col-xs-2" id="humlogo" align="middle">
+					<gc>Site dévéloppé par :</gc>
+				</div>
+				<div  class="col-xs-3" id="humlogo" >
+					<a href="http://www.reach-initiative.org" target="_blank">
+						<img  src="images/REACH1.jpg" alt="Reach Logo" align="middle" width="200px">
+					</a>
+				</div>
+				<div  class="col-xs-2" id="humlogo" align="middle">
+					<gc>Soutenu par :</gc>
+				</div>
+				
+				<div  class="col-xs-1" id="humlogo" >
+					<a href="http://ec.europa.eu/echo/index_fr" target="_blank">
+						<img  src="images/ECHO.png" alt="ECHO" align="left" width="70px" height="70px" >
+					</a>
+				</div>
+				
+				
+			</div>
+					
+			
+				
+			
+			
+			<div class='row'>
+				
+				
+				
+			</div>
+			
+		</div>
+		
+    <script type="text/javascript">
 
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
-    <script>
-        var myGeoJSONPath = '/Geo/NigerCustom.geo.json';
-        var myCustomStyle = {
-            stroke: false,
-            fill: true,
-            fillColor: '#fff',
-            fillOpacity: 1
-        }
-        $.getJSON(myGeoJSONPath,function(data){
-            var map = L.map('map').setView([39.74739, -105], 4);
 
-            L.geoJson(data, {
-                clickable: false,
-                style: myCustomStyle
-            }).addTo(map);
+var map_chart = dc.geoChoroplethChart("#map");
+ 
+	
+var etat_chart = dc.barChart("#etat");
+var sector1_chart = dc.barChart("#sector");
+var pop_chart = dc.pieChart("#activity");
+var organisation_chart = dc.rowChart("#organisation");	
+//var dataTable = dc.dataTable("#dc-table-graph");
+var departement_chart = dc.rowChart("#departement");	
+var commune_chart = dc.rowChart("#commune");
+var bailleur_chart = dc.rowChart("#bailleur");	
+
+d3.csv("6W_Diffa_Mar2017.csv", function(error, data) {
+  
+		var cf              = crossfilter(data);
+		
+		
+	  
+		cf.etat = cf.dimension(function(d){ return d.EtatProjet; });
+		cf.sector = cf.dimension(function(d){ return d.SecteurActivite; });
+		cf.activity = cf.dimension(function(d){ return d.SousSecteur; });
+		cf.organisation = cf.dimension(function(d){ return d.Acteur; });
+		
+		cf.siteaccueil = cf.dimension(function (d) {return d.SiteAccueil;});
+		cf.departement = cf.dimension(function(d){ return d.Departement; });
+		cf.commune = cf.dimension(function(d){ return d.Commune; });
+		cf.pop = cf.dimension(function(d){ 
+		
+			if (d.PopulationBeneficiaire ==      "Déplacés" )
+			  return "Déplacés"
+			else if (d.PopulationBeneficiaire == "Déplacés/Hôtes")
+			  return "Déplacés/Hôtes" 
+			else if (d.PopulationBeneficiaire == "Déplacés/Hôtes/Retournés")
+			  return "Déplacés/Hôtes/Réfugiés*"
+			else if (d.PopulationBeneficiaire == "Déplacés/Hôtes/Réfugiés")
+			  return "Déplacés/Hôtes/Réfugiés*" 	
+			else if (d.PopulationBeneficiaire == "Déplacés/Retournés")
+			  return "Déplacés/Réfugiés*" 
+			else if (d.PopulationBeneficiaire == "Déplacés/Réfugiés")
+			  return "Déplacés/Réfugiés*"   
+			else if (d.PopulationBeneficiaire == "Déplacés/Réfugiés/Ménages TP")
+			  return "Déplacés/Hôtes/Réfugiés*" 
+			else if (d.PopulationBeneficiaire == "Déplacés/Réfugiés/Retournés")
+			  return "Déplacés/Réfugiés*" 	
+			else if (d.PopulationBeneficiaire == "Hôtes")
+			  return "Hôtes" 
+			else if (d.PopulationBeneficiaire == "Hôtes/Retournés" )
+			  return "Hôtes/Réfugiés*"
+			else if (d.PopulationBeneficiaire == "Hôtes/Réfugiés/Retournés")
+			  return "Hôtes/Réfugiés*" 
+			else if (d.PopulationBeneficiaire == "Réfugiés/Retournés" )
+			  return "Réfugiés*"
+			else if (d.PopulationBeneficiaire == "Réfugiés")
+			  return "Réfugiés*" 
+			else if (d.PopulationBeneficiaire == "Déplacés/Réfugiés/Retournés/Hôtes" )
+			  return "Tous"	  
+			else if (d.PopulationBeneficiaire == "Tous" )
+			  return "Tous"	
+			  
+			else 
+			  return "Tous"      
+			
+			}); 
+		
+		
+		
+		
+		cf.dpcode = cf.dimension(function(d){ return d.Dpcode; });
+		cf.bailleur = cf.dimension(function(d){ return d.Bailleur; });
+		
+		
+		var etatValueGroupCount = cf.etat.group()
+			.reduceCount(function(d) { return d.EtatProjet; }); // counts 
+		var sectorValueGroupCount = cf.sector.group()
+			.reduceCount(function(d) { return d.SecteurActivite; }); // counts 
+		var departement = cf.departement.group();
+		var commune = cf.commune.group();
+		var pop = cf.pop.group();
+		var activity = cf.activity.group();
+		var organisation = cf.organisation.group();
+		var siteaccueil = cf.siteaccueil.group();
+		var dpcode = cf.dpcode.group();
+		var bailleur = cf.bailleur.group();
+		
+		var all = cf.groupAll();  
+		
+	
+	
+map_chart.width(1000).height(350)
+        .dimension(cf.dpcode)
+        .group(dpcode)
+        .colors(['#c7c9cb', '#ffc266'])
+        .colorDomain([0, 1])
+        .colorAccessor(function (d) {
+            if(d>0){
+                return 1;
+            } else {
+                return 0;
+            }
         })
-    </script>
-
-
-<div class="container">
-<script type="text/javascript" src="header.js"></script>
-  <div id="chart-ring-year" style="width:300px; height:330px">
-    <div class="reset" style="visibility: hidden;">selected: <span class="filter"></span>
-      <a href="javascript:yearRingChart.filterAll();dc.redrawAll();">reset</a>
-    </div>
-  </div>
-  <div id="chart-hist-spend" style="width:300px; height:330px">
-    <div class="reset" style="visibility: hidden;">range: <span class="filter"></span>
-      <a href="javascript:spendHistChart.filterAll();dc.redrawAll();">reset</a>
-    </div>
-  </div>
-  <div id="chart-row-spenders">
-    <div class="reset" style="visibility: hidden;">selected: <span class="filter"></span>
-      <a href="javascript:spenderRowChart.filterAll();dc.redrawAll();">reset</a>
-    </div>
-  </div>
-  <!-- not sure why all these styles necessary, not the point of this -->
-  <div style="clear: both; margin: 30px; float: left">
-    <div id="table"></div>
-    <div id="download-type" style="clear: both; float: left">
-      <div><label><input type=radio name="operation" value="raw" checked="true">&nbsp;all data</label></div>
-      <div><label><input type=radio name="operation" value="table">&nbsp;table data</label></div>
-    </div>
-    <div style="float: left">
-      <button class="btn" id="download">download</button>
-    </div>
-  </div>
-
-
-<script type="text/javascript" src="/d3.js"></script>
-<script type="text/javascript" src="/crossfilter.js"></script>
-<script type="text/javascript" src="/dc.js"></script>
-<script type="text/javascript" src="/FileSaver.js"></script>
-<script type="text/javascript">
-
-var yearRingChart   = dc.pieChart("#chart-ring-year"),
-    spendHistChart  = dc.barChart("#chart-hist-spend"),
-    spenderRowChart = dc.rowChart("#chart-row-spenders");
-
-var table = dc.dataTable('#table');
-
-// use static or load via d3.csv("spendData.csv", function(error, spendData) {/* do stuff */});
-var spendData = [
-    {Name: 'Mr A', Spent: '$40', Year: 2011},
-    {Name: 'Mr B', Spent: '$10', Year: 2011},
-    {Name: 'Mr C', Spent: '$40', Year: 2011},
-    {Name: 'Mr A', Spent: '$70', Year: 2012},
-    {Name: 'Mr B', Spent: '$20', Year: 2012},
-    {Name: 'Mr B', Spent: '$50', Year: 2013},
-    {Name: 'Mr C', Spent: '$30', Year: 2013}
-];
-
-// normalize/parse data
-spendData.forEach(function(d) {
-    d.Spent = d.Spent.match(/\d+/)[0];
-});
-
-// set crossfilter
-var ndx = crossfilter(spendData),
-    yearDim  = ndx.dimension(function(d) {return +d.Year;}),
-    spendDim = ndx.dimension(function(d) {return Math.floor(d.Spent/10);}),
-    nameDim  = ndx.dimension(function(d) {return d.Name;}),
-    spendPerYear = yearDim.group().reduceSum(function(d) {return +d.Spent;}),
-    spendPerName = nameDim.group().reduceSum(function(d) {return +d.Spent;}),
-    spendHist    = spendDim.group().reduceCount();
-
-  yearRingChart
-    .width(300)
-    .height(300)
-    .dimension(yearDim)
-    .group(spendPerYear)
-    .innerRadius(50)
-    .controlsUseVisibility(true);
-
-  spendHistChart
-    .dimension(spendDim)
-    .group(spendHist)
-    .x(d3.scale.linear().domain([0,10]))
-    .elasticY(true)
-    .controlsUseVisibility(true);
-
-spendHistChart.xAxis().tickFormat(function(d) {return d*10}); // convert back to base unit
-spendHistChart.yAxis().ticks(2);
-
-spenderRowChart
-    .dimension(nameDim)
-    .group(spendPerName)
-    .elasticX(true)
-    .controlsUseVisibility(true);
-
-var allDollars = ndx.groupAll().reduceSum(function(d) { return +d.Spent; });
-
-table
-    .dimension(spendDim)
-    .group(function(d) {
-        return d.value;
-    })
-    .showGroups(false)
-    .columns(['Name',
-              {
-                  label: 'Spent',
-                  format: function(d) {
-                      return '$' + d.Spent;
-                  }
-              },
-              'Year',
-              {
-                  label: 'Percent of Total',
-                  format: function(d) {
-                      return Math.floor((d.Spent / allDollars.value()) * 100) + '%';
-                  }
-              }]);
-
-d3.select('#download')
-    .on('click', function() {
-        var data = nameDim.top(Infinity);
-        if(d3.select('#download-type input:checked').node().value==='table') {
-            data = data.map(function(d) {
-                var row = {};
-                table.columns().forEach(function(c) {
-                    row[table._doColumnHeaderFormat(c)] = table._doColumnValueFormat(c, d);
-                });
-                return row;
+       .overlayGeoJson(dis.features, "District", function (d) {
+            return d.properties.id3;
+        })
+        .projection(d3.geo.mercator().center([12.6,13.5]).scale(12000))
+        .title(function(d){
+            var disname="";
+            dis.features.forEach(function(e){
+                if(d.key == e.properties.id3){
+                    disname= e.properties.name;
+                }
             });
-        }
-        var blob = new Blob([d3.csv.format(data)], {type: "text/csv;charset=utf-8"});
-        saveAs(blob, 'data.csv');
-    });
+            return disname;
+        })
+		;
+	
 
-dc.renderAll();
+	
+etat_chart.width(300)
+		.height(280)
+		.margins({top: 10, right: 10, bottom: 20, left: 40})
+        .dimension(cf.etat)
+        .group(etatValueGroupCount)        	
+		.transitionDuration(500)
+		.centerBar(false)	
+		.gap(40)  // 65 = norm
+		.colors("#E54143")
+		.x(d3.scale.ordinal().domain(["Réalisé","En cours","Planifié"]))
+		.xUnits(dc.units.ordinal)
+		.elasticY(true)
+		.yAxisLabel('Nombre d’activités')
+		.xAxis().tickFormat();
+		
+bailleur_chart.width(300).height(695)
+        .margins({top: 0, left: 10, right: 10, bottom: 40})
+        .dimension(cf.bailleur)
+        .group(bailleur)
+        .elasticX(true)
+		
+		.data(function(group) {
+            return group.top(40);
+        })
+        .colors(['#D68533','#4667b4','#0066FF','#FFFF00','#dd2728','#9460bd','#8c5646','#e177c2','#4f7f7f','#bcb622','#17becf','#367f0e','#9467bd','#c4fc94','#cc564b','#bcb322','#6e9ac8','#D68533'
+            ])
+        .colorDomain([0,17])
+        .colorAccessor(function(d, i){return i%17;}) 
+		.xAxis().ticks(4);	
+		
+sector1_chart.width(960)
+		.height(250)
+		.margins({top: 10, right: 50, bottom: 40, left: 50})
+        .dimension(cf.sector)
+        .group(sectorValueGroupCount)        	
+		.transitionDuration(500)
+		.centerBar(false)	
+		.gap(10)  // 65 = norm
+		.colors("#E54143")
+		.x(d3.scale.ordinal().domain(["Abris/BNA","Education","Nutrition","Communication","Protection","Protection de l'enfance","Santé","Sécurité Alimentaire","EHA","Logistique","Relèvement Précoce"]))
+		.xUnits(dc.units.ordinal)
+		.elasticY(true)
+		.xAxisLabel('Secteur')
+		.yAxisLabel('Nombre d’activités')
+		.xAxis().tickFormat(function (d) {
+        return d});	
+		
+ 		
+pop_chart.width(230).height(370)
+        .dimension(cf.pop)
+        .group(pop)
+		.radius(70)
+		.innerRadius(20)
+        .colors(['#e177c2','#009933' ,'#ffff00','#0059b3' ,'#f47f0e','#cccc99','#E54143','#36ff0e','#9460bd', '#8c5646'
+				])
+
+        .colorDomain([0,10])
+        .colorAccessor(function(d, i){return i%10;})
+		.legend(dc.legend().x(10).y(5).gap(4))
+		.label(function(d) { return d.pop; })
+		.renderLabel(true);		
+
+
+
+organisation_chart.width(300).height(695)
+        .margins({top: 0, left: 10, right: 10, bottom: 40})
+        .dimension(cf.organisation)
+        .group(organisation)
+        .elasticX(true)
+        .data(function(group) {
+            return group.top(43);
+        })
+        .colors(['#1f77b4',
+                 '#ff7f0e',
+                 '#2ca02c',
+                 '#d62728',
+                 '#9467bd',
+                 '#8c564b',
+                 '#e377c2',
+                 '#7f7f7f',
+				 '#bcbd22',
+                 '#17becf',
+                 '#ff7f0e',
+                 '#9467bd',
+                 '#c49c94',
+                 '#8c564b',
+                 '#bcbd22',
+                 '#9e9ac8'
+            ])
+        .colorDomain([0,8])
+        .colorAccessor(function(d, i){return i%8;})
+		.xAxis().ticks(4);
+		
+departement_chart.width(270).height(350)
+        .margins({top: 0, left: 10, right: 10, bottom: 40})
+        .dimension(cf.departement)
+        .group(departement)
+        .elasticX(true)
+        .data(function(group) {
+            return group.top(15);
+        })
+        .colors(['#1f77b4',
+                 '#ff7f0e',
+                 '#2ca02c',
+                 '#d62728',
+                 '#9467bd',
+                 '#8c564b',
+                 '#e377c2'
+                 
+            ])
+        .colorDomain([0,6])
+        .colorAccessor(function(d, i){return i%6;})
+		.xAxis().ticks(5);
+
+commune_chart.width(270).height(350)
+        .margins({top: 0, left: 10, right: 10, bottom: 40})
+        .dimension(cf.commune)
+        .group(commune)
+        .elasticX(true)
+        .data(function(group) {
+            return group.top(20);
+        })
+        .colors(['#7f7f7f',
+				 '#bc9d22',
+                 '#17becf',
+                 '#427f0e',
+                 '#9467bd',
+                 '#c49c94',
+                 '#8c564b',
+                 '#fcbd22',
+                 '#9e9ac8',
+                 '#7f7f7f',
+				 '#bcbd22',
+                 '#17becf',
+                 '#ff7f0e'
+                 
+            ])
+        .colorDomain([0,12])
+        .colorAccessor(function(d, i){return i%12;})
+		.xAxis().ticks(5);
+			
+		
+	
+		
+		dc.dataCount("#count-info")
+	.dimension(cf)
+	.group(all);
+	
+	
+      dc.renderAll();
+	  
+	 
+	  
+	var g = d3.selectAll("#organisation").select("svg").append("g");
+    g.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 150).attr("y", 685).text("Nombre d’activités");  
+	  
+	var g1 = d3.selectAll("#bailleur").select("svg").append("g");	
+	g1.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 160).attr("y", 685).text("Nombre d’activités");	
+	
+	var g2 = d3.selectAll("#departement").select("svg").append("g");	
+	g2.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 120).attr("y", 340).text("Nombre d’activités par département");	
+	
+	var g3 = d3.selectAll("#commune").select("svg").append("g");	
+	g3.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 120).attr("y", 340).text("Nombre d’activités par commune");	
+	
+	var g4 = d3.selectAll("#activity").select("svg").append("g");	
+	g4.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 120).attr("y",300).text("* : Réfugiés ou retournés");	
+			
+	
+		
+		
+	var dataset = [	[150, 220, "Goudoumaria"], [230, 130,"N'Gueil Bely"], [350, 160,"Foulatari"], [310, 270,"Mainé-Soroa"], [400, 240,"Chetimari"],
+							[468, 280,"Diffa"], [470, 240,"Gueskerou"], [470, 67,"N'Gourti"], [550, 210,"Toumour"], [590, 140,"Kabelawa"]	, [600, 70,"N'Guigmi"]	, [640, 190,"Bosso"]		  ];
+	
+	var h = d3.selectAll("#map").select("svg").append("g");
+    
+    h.selectAll("text")
+			   .data(dataset)
+			   .enter()
+			   .append("text")
+			   .attr("font-family", "calibri")
+			   .attr("font-size", "14px")
+			   .attr("stroke", "#555555")
+			   .text(function(d) {
+			   		return d[2];
+			   })
+			   .attr("x", function(d) {
+			   		return d[0];
+			   })
+			   .attr("y", function(d) {
+			   		return d[1];
+			   });
+	 });		   
 
 </script>
+	
 
-</div>
-
-
-</body>
+	
+    </body>
 </html>
