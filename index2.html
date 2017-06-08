@@ -73,407 +73,8 @@
 	collaboration avec l’Institut de Formation et de Recherche Démographiques (IFORD) partenaire 
 	technique de mise en œuvre. </g>
             </div>
-			<div class="row"  align="right" style="margin-left:50px">
-				 <div class="col-md-6">     </div>
-				<div class="col-md-6" id="count-info" >  
-						<h4>mars 2017 : <span class="filter-count"></span>  activités selectionnées sur <span class="total-count"></span> au total</h4>
-				</div> 	
-			</div>
-			 <div class="row" style="margin-left:50px">
-                   
-                    <div class="col-md-8" id="map"style="stroke:Black">  
-						
-					</div>
-					<div class="col-md-4"  align="right"> 	
-						<a class="reset btn btn-primary btn-sm" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
-					</div> 	
-            </div> 
-			<div class="row" style="margin-left:50px">
-					<div class="col-md-12"">  
-						<h4><gb>Secteur d'activité</gb></h4>
-						<div id="sector" class="col-md-12"></div>
-					</div>	
-			</div> 
-			<div class="row" style="margin-left:50px">
-					<div class="col-md-10" >  
-						<h4></h4>
-						<div  class="col-md-12"></div>
-					</div>	
-					<div class="col-md-2" align="right">
-						<a class="reset btn btn-primary btn-sm" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
-					</div>				
-						
-			</div>
-			<div class='row' style="margin-left:50px">
-					<div class="col-md-3" align="middle">
-							<h4><gb>Organisation</gb></h4>
-							<div id="organisation"></div>   
-					</div>
-					
-					<div class="col-md-6">
-							<div class="row">
-								<div class="col-md-6" align="middle">
-									<h4><gb>Département</gb></h4>
-									<div id="departement" class="col-xs-12"></div>                    
-								</div>   
-								<div class="col-md-6" align="middle">
-									<h4><gb>Commune</gb></h4>
-									<div id="commune" class="col-xs-12"></div>  
-								</div>	
-							</div>	
-							<div class="row">
-								<div class="col-xs-6" align="middle">
-									<h4><gb>Etat des activités</gb></h4>
-									<div id="etat" class="col-md-12"></div>                    
-								</div>   
-								<div class="col-xs-6" align="middle">	
-									<h4><gb>Population Bénéficiaire</gb></h4>
-									<div id="activity" class="col-md-12"></div>   	
-								</div>	
-							</div>
-							
-					</div>
-					<div class="col-md-3" align="middle">
-							<h4><gb>Bailleur</gb></h4>	
-							<div id="bailleur" ></div>
-							<div class="row" align="middle"></div>	
-							<div class="row" align="middle">
-								<gc>UNHCR* : Appuyé par BPRM, ECHO, DFID, AECID, CERF et le Gouvernement du Japon</gc>
-							 </div>	 
-					</div>
-							
-					
-			</div>
-				
-			
-				
-			
-			
-			<div class='row'>
-				
-				
-				
-			</div>
-			
-		</div>
-		
-    <script type="text/javascript">
-
-
-var map_chart = dc.geoChoroplethChart("#map");
- 
-	
-var etat_chart = dc.barChart("#etat");
-var sector1_chart = dc.barChart("#sector");
-var pop_chart = dc.pieChart("#activity");
-var organisation_chart = dc.rowChart("#organisation");	
-//var dataTable = dc.dataTable("#dc-table-graph");
-var departement_chart = dc.rowChart("#departement");	
-var commune_chart = dc.rowChart("#commune");
-var bailleur_chart = dc.rowChart("#bailleur");	
-
-d3.csv("6W_Diffa_Mar2017.csv", function(error, data) {
-  
-		var cf              = crossfilter(data);
-		
-		
-	  
-		cf.etat = cf.dimension(function(d){ return d.EtatProjet; });
-		cf.sector = cf.dimension(function(d){ return d.SecteurActivite; });
-		cf.activity = cf.dimension(function(d){ return d.SousSecteur; });
-		cf.organisation = cf.dimension(function(d){ return d.Acteur; });
-		
-		cf.siteaccueil = cf.dimension(function (d) {return d.SiteAccueil;});
-		cf.departement = cf.dimension(function(d){ return d.Departement; });
-		cf.commune = cf.dimension(function(d){ return d.Commune; });
-		cf.pop = cf.dimension(function(d){ 
-		
-			if (d.PopulationBeneficiaire ==      "Déplacés" )
-			  return "Déplacés"
-			else if (d.PopulationBeneficiaire == "Déplacés/Hôtes")
-			  return "Déplacés/Hôtes" 
-			else if (d.PopulationBeneficiaire == "Déplacés/Hôtes/Retournés")
-			  return "Déplacés/Hôtes/Réfugiés*"
-			else if (d.PopulationBeneficiaire == "Déplacés/Hôtes/Réfugiés")
-			  return "Déplacés/Hôtes/Réfugiés*" 	
-			else if (d.PopulationBeneficiaire == "Déplacés/Retournés")
-			  return "Déplacés/Réfugiés*" 
-			else if (d.PopulationBeneficiaire == "Déplacés/Réfugiés")
-			  return "Déplacés/Réfugiés*"   
-			else if (d.PopulationBeneficiaire == "Déplacés/Réfugiés/Ménages TP")
-			  return "Déplacés/Hôtes/Réfugiés*" 
-			else if (d.PopulationBeneficiaire == "Déplacés/Réfugiés/Retournés")
-			  return "Déplacés/Réfugiés*" 	
-			else if (d.PopulationBeneficiaire == "Hôtes")
-			  return "Hôtes" 
-			else if (d.PopulationBeneficiaire == "Hôtes/Retournés" )
-			  return "Hôtes/Réfugiés*"
-			else if (d.PopulationBeneficiaire == "Hôtes/Réfugiés/Retournés")
-			  return "Hôtes/Réfugiés*" 
-			else if (d.PopulationBeneficiaire == "Réfugiés/Retournés" )
-			  return "Réfugiés*"
-			else if (d.PopulationBeneficiaire == "Réfugiés")
-			  return "Réfugiés*" 
-			else if (d.PopulationBeneficiaire == "Déplacés/Réfugiés/Retournés/Hôtes" )
-			  return "Tous"	  
-			else if (d.PopulationBeneficiaire == "Tous" )
-			  return "Tous"	
-			  
-			else 
-			  return "Tous"      
-			
-			}); 
-		
-		
-		
-		
-		cf.dpcode = cf.dimension(function(d){ return d.Dpcode; });
-		cf.bailleur = cf.dimension(function(d){ return d.Bailleur; });
-		
-		
-		var etatValueGroupCount = cf.etat.group()
-			.reduceCount(function(d) { return d.EtatProjet; }); // counts 
-		var sectorValueGroupCount = cf.sector.group()
-			.reduceCount(function(d) { return d.SecteurActivite; }); // counts 
-		var departement = cf.departement.group();
-		var commune = cf.commune.group();
-		var pop = cf.pop.group();
-		var activity = cf.activity.group();
-		var organisation = cf.organisation.group();
-		var siteaccueil = cf.siteaccueil.group();
-		var dpcode = cf.dpcode.group();
-		var bailleur = cf.bailleur.group();
-		
-		var all = cf.groupAll();  
-		
-	
-	
-map_chart.width(1000).height(350)
-        .dimension(cf.dpcode)
-        .group(dpcode)
-        .colors(['#c7c9cb', '#ffc266'])
-        .colorDomain([0, 1])
-        .colorAccessor(function (d) {
-            if(d>0){
-                return 1;
-            } else {
-                return 0;
-            }
-        })
-       .overlayGeoJson(dis.features, "District", function (d) {
-            return d.properties.id3;
-        })
-        .projection(d3.geo.mercator().center([12.6,13.5]).scale(12000))
-        .title(function(d){
-            var disname="";
-            dis.features.forEach(function(e){
-                if(d.key == e.properties.id3){
-                    disname= e.properties.name;
-                }
-            });
-            return disname;
-        })
-		;
-	
-
-	
-etat_chart.width(300)
-		.height(280)
-		.margins({top: 10, right: 10, bottom: 20, left: 40})
-        .dimension(cf.etat)
-        .group(etatValueGroupCount)        	
-		.transitionDuration(500)
-		.centerBar(false)	
-		.gap(40)  // 65 = norm
-		.colors("#E54143")
-		.x(d3.scale.ordinal().domain(["Réalisé","En cours","Planifié"]))
-		.xUnits(dc.units.ordinal)
-		.elasticY(true)
-		.yAxisLabel('Nombre d’activités')
-		.xAxis().tickFormat();
-		
-bailleur_chart.width(300).height(695)
-        .margins({top: 0, left: 10, right: 10, bottom: 40})
-        .dimension(cf.bailleur)
-        .group(bailleur)
-        .elasticX(true)
-		
-		.data(function(group) {
-            return group.top(40);
-        })
-        .colors(['#D68533','#4667b4','#0066FF','#FFFF00','#dd2728','#9460bd','#8c5646','#e177c2','#4f7f7f','#bcb622','#17becf','#367f0e','#9467bd','#c4fc94','#cc564b','#bcb322','#6e9ac8','#D68533'
-            ])
-        .colorDomain([0,17])
-        .colorAccessor(function(d, i){return i%17;}) 
-		.xAxis().ticks(4);	
-		
-sector1_chart.width(960)
-		.height(250)
-		.margins({top: 10, right: 50, bottom: 40, left: 50})
-        .dimension(cf.sector)
-        .group(sectorValueGroupCount)        	
-		.transitionDuration(500)
-		.centerBar(false)	
-		.gap(10)  // 65 = norm
-		.colors("#E54143")
-		.x(d3.scale.ordinal().domain(["Abris/BNA","Education","Nutrition","Communication","Protection","Protection de l'enfance","Santé","Sécurité Alimentaire","EHA","Logistique","Relèvement Précoce"]))
-		.xUnits(dc.units.ordinal)
-		.elasticY(true)
-		.xAxisLabel('Secteur')
-		.yAxisLabel('Nombre d’activités')
-		.xAxis().tickFormat(function (d) {
-        return d});	
-		
- 		
-pop_chart.width(230).height(370)
-        .dimension(cf.pop)
-        .group(pop)
-		.radius(70)
-		.innerRadius(20)
-        .colors(['#e177c2','#009933' ,'#ffff00','#0059b3' ,'#f47f0e','#cccc99','#E54143','#36ff0e','#9460bd', '#8c5646'
-				])
-
-        .colorDomain([0,10])
-        .colorAccessor(function(d, i){return i%10;})
-		.legend(dc.legend().x(10).y(5).gap(4))
-		.label(function(d) { return d.pop; })
-		.renderLabel(true);		
-
-
-
-organisation_chart.width(300).height(695)
-        .margins({top: 0, left: 10, right: 10, bottom: 40})
-        .dimension(cf.organisation)
-        .group(organisation)
-        .elasticX(true)
-        .data(function(group) {
-            return group.top(43);
-        })
-        .colors(['#1f77b4',
-                 '#ff7f0e',
-                 '#2ca02c',
-                 '#d62728',
-                 '#9467bd',
-                 '#8c564b',
-                 '#e377c2',
-                 '#7f7f7f',
-				 '#bcbd22',
-                 '#17becf',
-                 '#ff7f0e',
-                 '#9467bd',
-                 '#c49c94',
-                 '#8c564b',
-                 '#bcbd22',
-                 '#9e9ac8'
-            ])
-        .colorDomain([0,8])
-        .colorAccessor(function(d, i){return i%8;})
-		.xAxis().ticks(4);
-		
-departement_chart.width(270).height(350)
-        .margins({top: 0, left: 10, right: 10, bottom: 40})
-        .dimension(cf.departement)
-        .group(departement)
-        .elasticX(true)
-        .data(function(group) {
-            return group.top(15);
-        })
-        .colors(['#1f77b4',
-                 '#ff7f0e',
-                 '#2ca02c',
-                 '#d62728',
-                 '#9467bd',
-                 '#8c564b',
-                 '#e377c2'
-                 
-            ])
-        .colorDomain([0,6])
-        .colorAccessor(function(d, i){return i%6;})
-		.xAxis().ticks(5);
-
-commune_chart.width(270).height(350)
-        .margins({top: 0, left: 10, right: 10, bottom: 40})
-        .dimension(cf.commune)
-        .group(commune)
-        .elasticX(true)
-        .data(function(group) {
-            return group.top(20);
-        })
-        .colors(['#7f7f7f',
-				 '#bc9d22',
-                 '#17becf',
-                 '#427f0e',
-                 '#9467bd',
-                 '#c49c94',
-                 '#8c564b',
-                 '#fcbd22',
-                 '#9e9ac8',
-                 '#7f7f7f',
-				 '#bcbd22',
-                 '#17becf',
-                 '#ff7f0e'
-                 
-            ])
-        .colorDomain([0,12])
-        .colorAccessor(function(d, i){return i%12;})
-		.xAxis().ticks(5);
-			
-		
-	
-		
-		dc.dataCount("#count-info")
-	.dimension(cf)
-	.group(all);
-	
-	
-      dc.renderAll();
-	  
-	 
-	  
-	var g = d3.selectAll("#organisation").select("svg").append("g");
-    g.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 150).attr("y", 685).text("Nombre d’activités");  
-	  
-	var g1 = d3.selectAll("#bailleur").select("svg").append("g");	
-	g1.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 160).attr("y", 685).text("Nombre d’activités");	
-	
-	var g2 = d3.selectAll("#departement").select("svg").append("g");	
-	g2.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 120).attr("y", 340).text("Nombre d’activités par département");	
-	
-	var g3 = d3.selectAll("#commune").select("svg").append("g");	
-	g3.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 120).attr("y", 340).text("Nombre d’activités par commune");	
-	
-	var g4 = d3.selectAll("#activity").select("svg").append("g");	
-	g4.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 120).attr("y",300).text("* : Réfugiés ou retournés");	
-			
-	
-		
-		
-	var dataset = [	[150, 220, "Goudoumaria"], [230, 130,"N'Gueil Bely"], [350, 160,"Foulatari"], [310, 270,"Mainé-Soroa"], [400, 240,"Chetimari"],
-							[468, 280,"Diffa"], [470, 240,"Gueskerou"], [470, 67,"N'Gourti"], [550, 210,"Toumour"], [590, 140,"Kabelawa"]	, [600, 70,"N'Guigmi"]	, [640, 190,"Bosso"]		  ];
-	
-	var h = d3.selectAll("#map").select("svg").append("g");
-    
-    h.selectAll("text")
-			   .data(dataset)
-			   .enter()
-			   .append("text")
-			   .attr("font-family", "calibri")
-			   .attr("font-size", "14px")
-			   .attr("stroke", "#555555")
-			   .text(function(d) {
-			   		return d[2];
-			   })
-			   .attr("x", function(d) {
-			   		return d[0];
-			   })
-			   .attr("y", function(d) {
-			   		return d[1];
-			   });
-	 });		   
-
-</script>
-	
-<div class="row">
+	     
+	<div class="row">
     <div class="span8">
    <svg  width="565" height="395" viewBox="0 0 842.25827 595.50236" enable-background="new 0 0 842.25827 595.50236"
 	version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
@@ -1516,7 +1117,413 @@ commune_chart.width(270).height(350)
 	</g>
 </svg>
     <span class="reset" style="display: none;">Selected: <span class="filter"></span></span>
-</div>
+</div>     
+	     
+	     
+	     
+	     
+	     
+			<div class="row"  align="right" style="margin-left:50px">
+				 <div class="col-md-6">     </div>
+				<div class="col-md-6" id="count-info" >  
+						<h4>mars 2017 : <span class="filter-count"></span>  activités selectionnées sur <span class="total-count"></span> au total</h4>
+				</div> 	
+			</div>
+			 <div class="row" style="margin-left:50px">
+                   
+                    <div class="col-md-8" id="map"style="stroke:Black">  
+						
+					</div>
+					<div class="col-md-4"  align="right"> 	
+						<a class="reset btn btn-primary btn-sm" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
+					</div> 	
+            </div> 
+			<div class="row" style="margin-left:50px">
+					<div class="col-md-12"">  
+						<h4><gb>Secteur d'activité</gb></h4>
+						<div id="sector" class="col-md-12"></div>
+					</div>	
+			</div> 
+			<div class="row" style="margin-left:50px">
+					<div class="col-md-10" >  
+						<h4></h4>
+						<div  class="col-md-12"></div>
+					</div>	
+					<div class="col-md-2" align="right">
+						<a class="reset btn btn-primary btn-sm" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
+					</div>				
+						
+			</div>
+			<div class='row' style="margin-left:50px">
+					<div class="col-md-3" align="middle">
+							<h4><gb>Organisation</gb></h4>
+							<div id="organisation"></div>   
+					</div>
+					
+					<div class="col-md-6">
+							<div class="row">
+								<div class="col-md-6" align="middle">
+									<h4><gb>Département</gb></h4>
+									<div id="departement" class="col-xs-12"></div>                    
+								</div>   
+								<div class="col-md-6" align="middle">
+									<h4><gb>Commune</gb></h4>
+									<div id="commune" class="col-xs-12"></div>  
+								</div>	
+							</div>	
+							<div class="row">
+								<div class="col-xs-6" align="middle">
+									<h4><gb>Etat des activités</gb></h4>
+									<div id="etat" class="col-md-12"></div>                    
+								</div>   
+								<div class="col-xs-6" align="middle">	
+									<h4><gb>Population Bénéficiaire</gb></h4>
+									<div id="activity" class="col-md-12"></div>   	
+								</div>	
+							</div>
+							
+					</div>
+					<div class="col-md-3" align="middle">
+							<h4><gb>Bailleur</gb></h4>	
+							<div id="bailleur" ></div>
+							<div class="row" align="middle"></div>	
+							<div class="row" align="middle">
+								<gc>UNHCR* : Appuyé par BPRM, ECHO, DFID, AECID, CERF et le Gouvernement du Japon</gc>
+							 </div>	 
+					</div>
+							
+					
+			</div>
+				
+			
+				
+			
+			
+			<div class='row'>
+				
+				
+				
+			</div>
+			
+		</div>
+		
+    <script type="text/javascript">
+
+
+var map_chart = dc.geoChoroplethChart("#map");
+ 
+	
+var etat_chart = dc.barChart("#etat");
+var sector1_chart = dc.barChart("#sector");
+var pop_chart = dc.pieChart("#activity");
+var organisation_chart = dc.rowChart("#organisation");	
+//var dataTable = dc.dataTable("#dc-table-graph");
+var departement_chart = dc.rowChart("#departement");	
+var commune_chart = dc.rowChart("#commune");
+var bailleur_chart = dc.rowChart("#bailleur");	
+
+d3.csv("6W_Diffa_Mar2017.csv", function(error, data) {
+  
+		var cf              = crossfilter(data);
+		
+		
+	  
+		cf.etat = cf.dimension(function(d){ return d.EtatProjet; });
+		cf.sector = cf.dimension(function(d){ return d.SecteurActivite; });
+		cf.activity = cf.dimension(function(d){ return d.SousSecteur; });
+		cf.organisation = cf.dimension(function(d){ return d.Acteur; });
+		
+		cf.siteaccueil = cf.dimension(function (d) {return d.SiteAccueil;});
+		cf.departement = cf.dimension(function(d){ return d.Departement; });
+		cf.commune = cf.dimension(function(d){ return d.Commune; });
+		cf.pop = cf.dimension(function(d){ 
+		
+			if (d.PopulationBeneficiaire ==      "Déplacés" )
+			  return "Déplacés"
+			else if (d.PopulationBeneficiaire == "Déplacés/Hôtes")
+			  return "Déplacés/Hôtes" 
+			else if (d.PopulationBeneficiaire == "Déplacés/Hôtes/Retournés")
+			  return "Déplacés/Hôtes/Réfugiés*"
+			else if (d.PopulationBeneficiaire == "Déplacés/Hôtes/Réfugiés")
+			  return "Déplacés/Hôtes/Réfugiés*" 	
+			else if (d.PopulationBeneficiaire == "Déplacés/Retournés")
+			  return "Déplacés/Réfugiés*" 
+			else if (d.PopulationBeneficiaire == "Déplacés/Réfugiés")
+			  return "Déplacés/Réfugiés*"   
+			else if (d.PopulationBeneficiaire == "Déplacés/Réfugiés/Ménages TP")
+			  return "Déplacés/Hôtes/Réfugiés*" 
+			else if (d.PopulationBeneficiaire == "Déplacés/Réfugiés/Retournés")
+			  return "Déplacés/Réfugiés*" 	
+			else if (d.PopulationBeneficiaire == "Hôtes")
+			  return "Hôtes" 
+			else if (d.PopulationBeneficiaire == "Hôtes/Retournés" )
+			  return "Hôtes/Réfugiés*"
+			else if (d.PopulationBeneficiaire == "Hôtes/Réfugiés/Retournés")
+			  return "Hôtes/Réfugiés*" 
+			else if (d.PopulationBeneficiaire == "Réfugiés/Retournés" )
+			  return "Réfugiés*"
+			else if (d.PopulationBeneficiaire == "Réfugiés")
+			  return "Réfugiés*" 
+			else if (d.PopulationBeneficiaire == "Déplacés/Réfugiés/Retournés/Hôtes" )
+			  return "Tous"	  
+			else if (d.PopulationBeneficiaire == "Tous" )
+			  return "Tous"	
+			  
+			else 
+			  return "Tous"      
+			
+			}); 
+		
+		
+		
+		
+		cf.dpcode = cf.dimension(function(d){ return d.Dpcode; });
+		cf.bailleur = cf.dimension(function(d){ return d.Bailleur; });
+		
+		
+		var etatValueGroupCount = cf.etat.group()
+			.reduceCount(function(d) { return d.EtatProjet; }); // counts 
+		var sectorValueGroupCount = cf.sector.group()
+			.reduceCount(function(d) { return d.SecteurActivite; }); // counts 
+		var departement = cf.departement.group();
+		var commune = cf.commune.group();
+		var pop = cf.pop.group();
+		var activity = cf.activity.group();
+		var organisation = cf.organisation.group();
+		var siteaccueil = cf.siteaccueil.group();
+		var dpcode = cf.dpcode.group();
+		var bailleur = cf.bailleur.group();
+		
+		var all = cf.groupAll();  
+		
+	
+	
+map_chart.width(1000).height(350)
+        .dimension(cf.dpcode)
+        .group(dpcode)
+        .colors(['#c7c9cb', '#ffc266'])
+        .colorDomain([0, 1])
+        .colorAccessor(function (d) {
+            if(d>0){
+                return 1;
+            } else {
+                return 0;
+            }
+        })
+       .overlayGeoJson(dis.features, "District", function (d) {
+            return d.properties.id3;
+        })
+        .projection(d3.geo.mercator().center([12.6,13.5]).scale(12000))
+        .title(function(d){
+            var disname="";
+            dis.features.forEach(function(e){
+                if(d.key == e.properties.id3){
+                    disname= e.properties.name;
+                }
+            });
+            return disname;
+        })
+		;
+	
+
+	
+etat_chart.width(300)
+		.height(280)
+		.margins({top: 10, right: 10, bottom: 20, left: 40})
+        .dimension(cf.etat)
+        .group(etatValueGroupCount)        	
+		.transitionDuration(500)
+		.centerBar(false)	
+		.gap(40)  // 65 = norm
+		.colors("#E54143")
+		.x(d3.scale.ordinal().domain(["Réalisé","En cours","Planifié"]))
+		.xUnits(dc.units.ordinal)
+		.elasticY(true)
+		.yAxisLabel('Nombre d’activités')
+		.xAxis().tickFormat();
+		
+bailleur_chart.width(300).height(695)
+        .margins({top: 0, left: 10, right: 10, bottom: 40})
+        .dimension(cf.bailleur)
+        .group(bailleur)
+        .elasticX(true)
+		
+		.data(function(group) {
+            return group.top(40);
+        })
+        .colors(['#D68533','#4667b4','#0066FF','#FFFF00','#dd2728','#9460bd','#8c5646','#e177c2','#4f7f7f','#bcb622','#17becf','#367f0e','#9467bd','#c4fc94','#cc564b','#bcb322','#6e9ac8','#D68533'
+            ])
+        .colorDomain([0,17])
+        .colorAccessor(function(d, i){return i%17;}) 
+		.xAxis().ticks(4);	
+		
+sector1_chart.width(960)
+		.height(250)
+		.margins({top: 10, right: 50, bottom: 40, left: 50})
+        .dimension(cf.sector)
+        .group(sectorValueGroupCount)        	
+		.transitionDuration(500)
+		.centerBar(false)	
+		.gap(10)  // 65 = norm
+		.colors("#E54143")
+		.x(d3.scale.ordinal().domain(["Abris/BNA","Education","Nutrition","Communication","Protection","Protection de l'enfance","Santé","Sécurité Alimentaire","EHA","Logistique","Relèvement Précoce"]))
+		.xUnits(dc.units.ordinal)
+		.elasticY(true)
+		.xAxisLabel('Secteur')
+		.yAxisLabel('Nombre d’activités')
+		.xAxis().tickFormat(function (d) {
+        return d});	
+		
+ 		
+pop_chart.width(230).height(370)
+        .dimension(cf.pop)
+        .group(pop)
+		.radius(70)
+		.innerRadius(20)
+        .colors(['#e177c2','#009933' ,'#ffff00','#0059b3' ,'#f47f0e','#cccc99','#E54143','#36ff0e','#9460bd', '#8c5646'
+				])
+
+        .colorDomain([0,10])
+        .colorAccessor(function(d, i){return i%10;})
+		.legend(dc.legend().x(10).y(5).gap(4))
+		.label(function(d) { return d.pop; })
+		.renderLabel(true);		
+
+
+
+organisation_chart.width(300).height(695)
+        .margins({top: 0, left: 10, right: 10, bottom: 40})
+        .dimension(cf.organisation)
+        .group(organisation)
+        .elasticX(true)
+        .data(function(group) {
+            return group.top(43);
+        })
+        .colors(['#1f77b4',
+                 '#ff7f0e',
+                 '#2ca02c',
+                 '#d62728',
+                 '#9467bd',
+                 '#8c564b',
+                 '#e377c2',
+                 '#7f7f7f',
+				 '#bcbd22',
+                 '#17becf',
+                 '#ff7f0e',
+                 '#9467bd',
+                 '#c49c94',
+                 '#8c564b',
+                 '#bcbd22',
+                 '#9e9ac8'
+            ])
+        .colorDomain([0,8])
+        .colorAccessor(function(d, i){return i%8;})
+		.xAxis().ticks(4);
+		
+departement_chart.width(270).height(350)
+        .margins({top: 0, left: 10, right: 10, bottom: 40})
+        .dimension(cf.departement)
+        .group(departement)
+        .elasticX(true)
+        .data(function(group) {
+            return group.top(15);
+        })
+        .colors(['#1f77b4',
+                 '#ff7f0e',
+                 '#2ca02c',
+                 '#d62728',
+                 '#9467bd',
+                 '#8c564b',
+                 '#e377c2'
+                 
+            ])
+        .colorDomain([0,6])
+        .colorAccessor(function(d, i){return i%6;})
+		.xAxis().ticks(5);
+
+commune_chart.width(270).height(350)
+        .margins({top: 0, left: 10, right: 10, bottom: 40})
+        .dimension(cf.commune)
+        .group(commune)
+        .elasticX(true)
+        .data(function(group) {
+            return group.top(20);
+        })
+        .colors(['#7f7f7f',
+				 '#bc9d22',
+                 '#17becf',
+                 '#427f0e',
+                 '#9467bd',
+                 '#c49c94',
+                 '#8c564b',
+                 '#fcbd22',
+                 '#9e9ac8',
+                 '#7f7f7f',
+				 '#bcbd22',
+                 '#17becf',
+                 '#ff7f0e'
+                 
+            ])
+        .colorDomain([0,12])
+        .colorAccessor(function(d, i){return i%12;})
+		.xAxis().ticks(5);
+			
+		
+	
+		
+		dc.dataCount("#count-info")
+	.dimension(cf)
+	.group(all);
+	
+	
+      dc.renderAll();
+	  
+	 
+	  
+	var g = d3.selectAll("#organisation").select("svg").append("g");
+    g.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 150).attr("y", 685).text("Nombre d’activités");  
+	  
+	var g1 = d3.selectAll("#bailleur").select("svg").append("g");	
+	g1.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 160).attr("y", 685).text("Nombre d’activités");	
+	
+	var g2 = d3.selectAll("#departement").select("svg").append("g");	
+	g2.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 120).attr("y", 340).text("Nombre d’activités par département");	
+	
+	var g3 = d3.selectAll("#commune").select("svg").append("g");	
+	g3.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 120).attr("y", 340).text("Nombre d’activités par commune");	
+	
+	var g4 = d3.selectAll("#activity").select("svg").append("g");	
+	g4.append("text").attr("class", "x-axis-label").attr("text-anchor", "middle").attr("x", 120).attr("y",300).text("* : Réfugiés ou retournés");	
+			
+	
+		
+		
+	var dataset = [	[150, 220, "Goudoumaria"], [230, 130,"N'Gueil Bely"], [350, 160,"Foulatari"], [310, 270,"Mainé-Soroa"], [400, 240,"Chetimari"],
+							[468, 280,"Diffa"], [470, 240,"Gueskerou"], [470, 67,"N'Gourti"], [550, 210,"Toumour"], [590, 140,"Kabelawa"]	, [600, 70,"N'Guigmi"]	, [640, 190,"Bosso"]		  ];
+	
+	var h = d3.selectAll("#map").select("svg").append("g");
+    
+    h.selectAll("text")
+			   .data(dataset)
+			   .enter()
+			   .append("text")
+			   .attr("font-family", "calibri")
+			   .attr("font-size", "14px")
+			   .attr("stroke", "#555555")
+			   .text(function(d) {
+			   		return d[2];
+			   })
+			   .attr("x", function(d) {
+			   		return d[0];
+			   })
+			   .attr("y", function(d) {
+			   		return d[1];
+			   });
+	 });		   
+
+</script>
+	
+
 	
     </body>
 </html>
