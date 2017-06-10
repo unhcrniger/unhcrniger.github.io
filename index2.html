@@ -1364,7 +1364,7 @@ commune_chart.width(270).height(350)
         return v.type == "Homicide" && v.sub_type == "Actual incidents";
     }
 
-    d3.csv("crime.csv", function(csv) {
+    d3.csv("NigerFigures.csv", function(csv) {
         var data = crossfilter(csv);
 
         var cities = data.dimension(function(d) {
@@ -1490,9 +1490,9 @@ commune_chart.width(270).height(350)
                 .point("Quebec", 431, 351)
                 .point("Halifax", 496, 367)
                 .point("St. John's", 553, 323)
-                .point("Yukon", 44, 176)
-                .point("Northwest Territories", 125, 195)
-                .point("Nunavut", 273, 188)
+                .point("Mangaize", 44, 176)
+                .point("Intikane", 125, 195)
+                .point("Tabareybarey", 273, 188)
                 .debug(false);
 
         incidentChart
