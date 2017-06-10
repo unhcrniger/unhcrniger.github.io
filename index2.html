@@ -59,6 +59,19 @@
           fill: rgba(0,114,188,0.2);
         }
     </style>    
+<style type="text/css">
+        div#incident-chart { 
+            float: right;
+        }
+        div#homicide-chart {
+            float: right;
+        }
+        .dc-chart .deselected circle {
+          stroke: none;
+          fill: rgba(0,114,188,0.2);
+        }
+    </style>
+
 	    
 <script>
  
@@ -68,16 +81,16 @@
 		<nav class="navbar navbar-inverse navbar-static-top" style="background:#0072bc">
 			
 			
-			<div class="container">
+			
 		 
    				
                <h2 style="font-size:22px;color:#fff; text-align:center">Situation socio-économique des réfugiés maliens au Niger </h2>
      
 			       
-            </div>
+         
                </nav>   
 	 
-	 
+	<div class="container"> 
         		
 				
                
@@ -89,7 +102,20 @@
 	collaboration avec l’Institut de Formation et de Recherche Démographiques (IFORD) partenaire 
 	technique de mise en œuvre. </g>
             </div>
-	<div class="clearfix"></div>     
+
+		<div id="ca-chart">
+<strong>Crime Rate by City</strong>
+<a class="reset" href="javascript:caChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+
+<dl class="dl-horizontal">
+    <dt>radius</dt>
+    <dd>total crime rate per 100k population</dd>
+    <dt>color</dt>
+    <dd>violent/non-violent crime ratio</dd>
+</dl>
+
+<div class="clearfix"></div>
+	
 	<div class="row">
     <div class="span8">
  <svg width="542.25827" height="395.50236" viewBox="0 0 842.25827 595.50236" enable-background="new 0 0 842.25827 595.50236"
@@ -1517,6 +1543,6 @@ commune_chart.width(270).height(350)
         dc.renderAll();
     });
 </script>
-	
+</div>	
     </body>
 </html>
