@@ -916,22 +916,8 @@
         </div>
     </div>
 </div>
+	
 
-			
-
-    <div class="span4">
-        <div id="incident-chart">
-            <strong>Crime Per 100K Population by Year</strong>
-            <div class="clearfix"></div>
-        </div>
-
-        <div id="homicide-chart">
-            <strong>Homicide Incidents by Year</strong>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-</div>
-			
 	
 <div class="clearfix"></div>
 
@@ -944,36 +930,8 @@
 	     
 	     
 	     
-			<div class="row"  align="right" style="margin-left:50px">
-				 <div class="col-md-6">     </div>
-				<div class="col-md-6" id="count-info" >  
-						<h4>Etude 2017 </h4>
-					
-        
-
-				</div> 	
-			</div>
-			 <div class="row" style="margin-left:50px">
-                   
-                    <div class="col-md-8" id="map"style="stroke:Black">  
-						
-					</div>
-					<div class="col-md-4"  align="right"> 	
-						<a class="reset btn btn-primary btn-sm" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
-					</div> 	
-            </div> 
 			
-			</div> 
-			<div class="row" style="margin-left:50px">
-					<div class="col-md-10" >  
-						<h4></h4>
-						<div  class="col-md-12"></div>
-					</div>	
-					<div class="col-md-2" align="right">
-						<a class="reset btn btn-primary btn-sm" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
-					</div>				
-						
-			</div>
+			
 			<div class='row' style="margin-left:50px">
 					<div class="col-md-3" align="middle">
 							<h4><gb>Organisation</gb></h4>
@@ -1036,7 +994,7 @@ var departement_chart = dc.rowChart("#departement");
 var commune_chart = dc.rowChart("#commune");
 var bailleur_chart = dc.rowChart("#bailleur");	
 
-d3.csv("6W_Diffa_Mar2017.csv", function(error, data) {
+d3.csv("NigerFigures.csv", function(error, data) {
   
 		var cf              = crossfilter(data);
 		
