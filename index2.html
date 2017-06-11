@@ -1491,8 +1491,8 @@ d3.csv("morley.csv", function(error, experiments) {
        speedSumGroup       = runDimension.group().reduceSum(function(d) {return d.Speed * d.Run / 1000;}); 
   
    chart 
-     .width(768) 
-     .height(480) 
+     .width(560) 
+     .height(395) 
      .x(d3.scale.linear().domain([6,20])) 
      .brushOn(false) 
      .yAxisLabel("This is the Y Axis!") 
