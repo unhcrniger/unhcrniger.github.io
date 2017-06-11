@@ -1491,7 +1491,7 @@ d3.csv("morley.csv", function(error, experiments) {
        speedSumGroup       = runDimension.group().reduceSum(function(d) {return d.Speed * d.Run / 1000;}); 
   
    chart 
-     .width(260) 
+     .width(360) 
      .height(195) 
      .x(d3.scale.linear().domain([6,20])) 
      .brushOn(false) 
