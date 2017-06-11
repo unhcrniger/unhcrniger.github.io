@@ -908,7 +908,8 @@
 			<div class='row' style="margin-left:50px">
 					<div class="col-md-3" align="middle">
 							<h4><gb>Organisation</gb></h4>
-							<div id="organisation"></div>   
+							<div id="organisation"></div>
+						<div id="test"></div>
 					</div>
 					
 					<div class="col-md-6">
@@ -1477,6 +1478,63 @@ commune_chart.width(270).height(350)
         dc.renderAll();
     });
 </script>
+<script type="text/javascript"> 
+25  
+26 var chart = dc.barChart("#test"); 
+27 d3.csv("morley.csv", function(error, experiments) { 
+28  
+29   experiments.forEach(function(x) { 
+30     x.Speed = +x.Speed; 
+31   }); 
+32  
+33   var ndx                 = crossfilter(experiments), 
+34       runDimension        = ndx.dimension(function(d) {return +d.Run;}), 
+35       speedSumGroup       = runDimension.group().reduceSum(function(d) {return d.Speed * d.Run / 1000;}); 
+36  
+37   chart 
+38     .width(768) 
+39     .height(480) 
+40     .x(d3.scale.linear().domain([6,20])) 
+41     .brushOn(false) 
+42     .yAxisLabel("This is the Y Axis!") 
+43     .dimension(runDimension) 
+44     .group(speedSumGroup) 
+45     .renderLabel(true) 
+46     .on('renderlet', function(chart) { 
+47         chart.selectAll('rect').on("click", function(d) { 
+48             console.log("click!", d); 
+49         }); 
+50         var left_y = 10, right_y = 70; // use real statistics here! 
+51         var extra_data = [{x: chart.x().range()[0], y: chart.y()(left_y)}, {x: chart.x().range()[1], y: chart.y()(right_y)}]; 
+52         var line = d3.svg.line() 
+53             .x(function(d) { return d.x; }) 
+54             .y(function(d) { return d.y; }) 
+55             .interpolate('linear'); 
+56         var chartBody = chart.select('g.chart-body'); 
+57         var path = chartBody.selectAll('path.extra').data([extra_data]); 
+58         path.enter().append('path').attr({ 
+59             class: 'extra', 
+60             stroke: 'red', 
+61             id: 'extra-line' 
+62         }); 
+63         path.attr('d', line); 
+64         // and perhaps you'd like to label it? 
+65         var text = chartBody.selectAll('text.extra-label').data([0]); 
+66         text.enter().append('text') 
+67                 .attr('text-anchor', 'middle') 
+68             .append('textPath').attr({ 
+69                 class: 'extra-label', 
+70                 'xlink:href': '#extra-line', 
+71                 startOffset: '50%' 
+72             }) 
+73             .text('this is a label for the line'); 
+74     }); 
+75     chart.render(); 
+76 }); 
+77  
+78 </script> 
+		
+		
 </div>	
     </body>
 </html>
