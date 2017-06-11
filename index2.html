@@ -880,17 +880,17 @@
 
     <div class="span4">
         <div id="incident-chart">
-            <strong>Crime Per 100K Population by Year</strong>
+            <strong>Evolution de niveau de vie par an</strong>
             <div class="clearfix"></div>
         </div>
 
-        <div id="homicide-chart">
-            <strong>Homicide Incidents by Year</strong>
+       <div id="test"></div>
+            <strong>Répartition des interviewés par sexe (%)</strong>
             <div class="clearfix"></div>
         </div>
     </div>
 </div>
-	<div id="test"></div>
+	
 
 	
 <div class="clearfix"></div>
@@ -1486,9 +1486,9 @@ d3.csv("morley.csv", function(error, experiments) {
       runDimension  = ndx.dimension(function(d) {return "run-"+d.Run;})
       speedSumGroup = runDimension.group().reduceSum(function(d) {return d.Speed * d.Run;});
   chart
-    .width(768)
-    .height(480)
-    .slicesCap(4)
+    .width(360)
+    .height(280)
+    .slicesCap(2)
     .innerRadius(100)
     .dimension(runDimension)
     .group(speedSumGroup)
