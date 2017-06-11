@@ -890,7 +890,7 @@
         </div>
     </div>
 </div>
-	<div id="test1"></div>
+	<div id="test"></div>
 
 	
 <div class="clearfix"></div>
@@ -1478,9 +1478,9 @@ commune_chart.width(270).height(350)
         dc.renderAll();
     });
 </script>
- x 
+ 
 <script type="text/javascript">
-var chart = dc.pieChart("#test1");
+var chart = dc.pieChart("#test");
 d3.csv("morley.csv", function(error, experiments) {
   var ndx           = crossfilter(experiments),
       runDimension  = ndx.dimension(function(d) {return "run-"+d.Run;})
