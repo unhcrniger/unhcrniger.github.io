@@ -885,7 +885,7 @@
         </div>
 
        <div id="test"></div>
-            <strong>Répartition des interviewés par sexe (%)</strong>
+            <strong>Répartition par sexe (%)</strong>
             <div class="clearfix"></div>
         </div>
     </div>
@@ -1492,7 +1492,7 @@ d3.csv("morley.csv", function(error, experiments) {
     .innerRadius(0)
     .dimension(runDimension)
     .group(speedSumGroup)
-    .legend(dc.legend())
+   
     // workaround for #703: not enough data is accessible through .label() to display percentages
     .on('pretransition', function(chart) {
         chart.selectAll('text.pie-slice').text(function(d) {
