@@ -1486,8 +1486,8 @@ d3.csv("morley.csv", function(error, experiments) {
       runDimension  = ndx.dimension(function(d) {return "run-"+d.Run;})
       speedSumGroup = runDimension.group().reduceSum(function(d) {return d.Speed * d.Run;});
   chart
-    .width(180)
-    .height(180)
+    .width(120)
+    .height(120)
     .slicesCap(2)
     .innerRadius(0)
     .dimension(runDimension)
