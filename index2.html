@@ -890,7 +890,7 @@
         </div>
     </div>
 </div>
-	<div id="test"></div>
+	<div id="test1"></div>
 
 	
 <div class="clearfix"></div>
@@ -1533,7 +1533,7 @@ d3.csv("morley.csv", function(error, experiments) {
   
  </script> 
 <script type="text/javascript">
-var chart = dc.pieChart("#test");
+var chart = dc.pieChart("#test1");
 d3.csv("morley.csv", function(error, experiments) {
   var ndx           = crossfilter(experiments),
       runDimension  = ndx.dimension(function(d) {return "run-"+d.Run;})
