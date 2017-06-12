@@ -1205,7 +1205,7 @@ commune_chart.width(270).height(350)
                  '#fcbd22',
                  '#9e9ac8',
                  '#7f7f7f',
-				 '#bcbd22',
+		 '#bcbd22',
                  '#17becf',
                  '#ff7f0e'
                  
@@ -1280,7 +1280,7 @@ commune_chart.width(270).height(350)
     var caChart = dc.bubbleOverlay("#ca-chart")
             .svg(d3.select("#ca-chart svg"));
 
-    var incidentChart = dc.barChart("#viveaudevie-chart");
+    var incidentChart = dc.barChart("#niveaudevie-chart");
 
     var homicideChart = dc.lineChart("#interviewsex-chart");
 
@@ -1430,7 +1430,7 @@ commune_chart.width(270).height(350)
                 .point("Tabareybarey", 220, 300)
                 .debug(false);
 
-        incidentChart
+        niveaudevieChart
                 .width(360)
                 .height(180)
                 .margins({top: 40, right: 50, bottom: 30, left: 60})
@@ -1456,7 +1456,7 @@ commune_chart.width(270).height(350)
 	
 	    
 	    
-        homicideChart
+        interviewsexChart
                .width(360)
                 .height(150)
                 .margins({top: 10, right: 50, bottom: 30, left: 60})
