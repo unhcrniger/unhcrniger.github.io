@@ -884,7 +884,7 @@
             <div class="clearfix"></div>
         </div>
 
-        <div id="interviewsex">
+        <div id="interviewsex-chart">
             <strong>Répartition par sexe (%)</strong>
             <div class="clearfix"></div>
         </div>
@@ -1280,9 +1280,9 @@ commune_chart.width(270).height(350)
     var caChart = dc.bubbleOverlay("#ca-chart")
             .svg(d3.select("#ca-chart svg"));
 
-    var incidentChart = dc.barChart("#niveaudevie-chart");
+    var niveaudevieChart = dc.barChart("#niveaudevie-chart");
 
-    var homicideChart = dc.lineChart("#interviewsex-chart");
+    var interviewsexChart = dc.lineChart("#interviewsex-chart");
 
     function isTotalCrimeRateRecord(v) {
         return v.type == "Total, all violations" && v.sub_type == "Rate per 100,000 population";
