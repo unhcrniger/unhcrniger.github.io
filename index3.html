@@ -1430,7 +1430,7 @@ commune_chart.width(270).height(350)
                 .debug(false);
 
         niveaudevieChart
-                .width(160)
+                .width(260)
                 .height(180)
                 .margins({top: 40, right: 50, bottom: 30, left:60})
                 .dimension(years)
@@ -1441,9 +1441,9 @@ commune_chart.width(270).height(350)
                 .stack(crimeIncidentByYear, "Violent Crime", function(d){return d.value.violentCrimeAvg;})
                 .x(d3.scale.linear().domain([2009, 2012]))
                 .renderHorizontalGridLines(true)
-                .centerBar(false)
+                .centerBar(true)
                 .elasticY(true)
-                .brushOn(false)
+                .brushOn(true)
                 .legend(dc.legend().x(250).y(10))
                 .title(function(d){
                     return d.key
@@ -1456,7 +1456,7 @@ commune_chart.width(270).height(350)
 	    
 	    
         interviewsexChart
-               .width(160)
+               .width(260)
                 .height(150)
                 .margins({top: 10, right: 50, bottom: 30, left: 60})
                 .dimension(years)
