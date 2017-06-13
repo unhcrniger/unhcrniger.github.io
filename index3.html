@@ -959,29 +959,29 @@
 var map_chart = dc.geoChoroplethChart("#map");
  
 	
-var etat_chart = dc.barChart("#year");
-var sector1_chart = dc.barChart("#type");
-//var pop_chart = dc.pieChart("#activity");
-var organisation_chart = dc.rowChart("#city");	
+var etat_chart = dc.barChart("#etat");
+var sector1_chart = dc.barChart("#sector");
+var pop_chart = dc.pieChart("#activity");
+var organisation_chart = dc.rowChart("#organisation");	
 //var dataTable = dc.dataTable("#dc-table-graph");
-var departement_chart = dc.rowChart("#sub_type");	
-var commune_chart = dc.rowChart("#number");
-//var bailleur_chart = dc.rowChart("#bailleur");	
+var departement_chart = dc.rowChart("#departement");	
+var commune_chart = dc.rowChart("#commune");
+var bailleur_chart = dc.rowChart("#bailleur");	
 
-d3.csv("NigerFigures.csv", function(error, data) {
+d3.csv("6W_Diffa_Mar2017.csv", function(error, data) {
   
 		var cf              = crossfilter(data);
 		
 		
 	  
-		cf.year = cf.dimension(function(d){ return d.year; });
-		//cf.sector = cf.dimension(function(d){ return d.SecteurActivite; });
-		//cf.activity = cf.dimension(function(d){ return d.SousSecteur; });
-		cf.organisation = cf.dimension(function(d){ return d.city; });
+		cf.etat = cf.dimension(function(d){ return d.EtatProjet; });
+		cf.sector = cf.dimension(function(d){ return d.SecteurActivite; });
+		cf.activity = cf.dimension(function(d){ return d.SousSecteur; });
+		cf.organisation = cf.dimension(function(d){ return d.Acteur; });
 		
-		//cf.siteaccueil = cf.dimension(function (d) {return d.SiteAccueil;});
-		cf.departement = cf.dimension(function(d){ return d.sub_type; });
-		cf.commune = cf.dimension(function(d){ return d.number; });
+		cf.siteaccueil = cf.dimension(function (d) {return d.SiteAccueil;});
+		cf.departement = cf.dimension(function(d){ return d.Departement; });
+		cf.commune = cf.dimension(function(d){ return d.Commune; });
 		cf.pop = cf.dimension(function(d){ 
 		
 			if (d.PopulationBeneficiaire ==      "Déplacés" )
@@ -1023,22 +1023,22 @@ d3.csv("NigerFigures.csv", function(error, data) {
 		
 		
 		
-		//cf.dpcode = cf.dimension(function(d){ return d.Dpcode; });
-		//cf.bailleur = cf.dimension(function(d){ return d.Bailleur; });
+		cf.dpcode = cf.dimension(function(d){ return d.Dpcode; });
+		cf.bailleur = cf.dimension(function(d){ return d.Bailleur; });
 		
 		
-		//var etatValueGroupCount = cf.year.group()
-		//	.reduceCount(function(d) { return d.EtatProjet; }); // counts 
-		//var sectorValueGroupCount = cf.sector.group()
-		//	.reduceCount(function(d) { return d.SecteurActivite; }); // counts 
+		var etatValueGroupCount = cf.etat.group()
+			.reduceCount(function(d) { return d.EtatProjet; }); // counts 
+		var sectorValueGroupCount = cf.sector.group()
+			.reduceCount(function(d) { return d.SecteurActivite; }); // counts 
 		var departement = cf.departement.group();
 		var commune = cf.commune.group();
 		var pop = cf.pop.group();
-		//var activity = cf.activity.group();
+		var activity = cf.activity.group();
 		var organisation = cf.organisation.group();
-		//var siteaccueil = cf.siteaccueil.group();
-		//var dpcode = cf.dpcode.group();
-		//var bailleur = cf.bailleur.group();
+		var siteaccueil = cf.siteaccueil.group();
+		var dpcode = cf.dpcode.group();
+		var bailleur = cf.bailleur.group();
 		
 		var all = cf.groupAll();  
 		
@@ -1205,7 +1205,7 @@ commune_chart.width(270).height(350)
                  '#fcbd22',
                  '#9e9ac8',
                  '#7f7f7f',
-		 '#bcbd22',
+				 '#bcbd22',
                  '#17becf',
                  '#ff7f0e'
                  
@@ -1266,7 +1266,6 @@ commune_chart.width(270).height(350)
 			   		return d[1];
 			   });
 	 });		   
-
 </script>
 	
 		
