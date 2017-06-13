@@ -885,10 +885,7 @@ div#niveaudevie1-chart {
             <strong>Evolution de niveau de vie par an</strong>
             <div class="clearfix"></div>
         </div>
-<div id="niveaudevie1-chart">
-            <strong>Test affichage</strong>
-            <div class="clearfix"></div>
-        </div>
+
 	    
         <div id="interviewsex-chart">
             <strong>Répartition par sexe (%)</strong>
@@ -1458,28 +1455,7 @@ commune_chart.width(270).height(350)
                 })
                 .xAxis().ticks(5).tickFormat(d3.format("d"));
 
-	niveaudevie1Chart
-                .width(260)
-                .height(180)
-                .margins({top: 40, right: 100, bottom: 30, left:80})
-                .dimension(years)
-                .group(crimeIncidentByYear, "Non-Violent Crime")
-                .valueAccessor(function(d) {
-                    return d.value.nonViolentCrimeAvg;
-                })
-                .stack(crimeIncidentByYear, "Violent Crime", function(d){return d.value.violentCrimeAvg;})
-                .x(d3.scale.linear().domain([2008, 2011]))
-                .renderHorizontalGridLines(true)
-                .centerBar(false)
-                .elasticY(false)
-                .brushOn(false)
-                .legend(dc.legend().x(150).y(10))
-                .title(function(d){
-                    return d.key
-                            + "\nViolent crime per 100k population: " + Math.round(d.value.violentCrimeAvg)
-                            + "\nNon-Violent crime per 100k population: " + Math.round(d.value.nonViolentCrimeAvg);
-                })
-                .xAxis().ticks(5).tickFormat(d3.format("d"));
+	
 	    
 	    
         interviewsexChart
