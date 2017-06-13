@@ -909,35 +909,35 @@
 					<div class="col-md-3" align="middle">
 							<h4><gb>Organisation</gb></h4>
 							
-						<div id="test"></div>
+						<<div id="interviewsex-chart"></div>
 					</div>
 					
 					<div class="col-md-6">
 							<div class="row">
 								<div class="col-md-6" align="middle">
 									<h4><gb>Département</gb></h4>
-									<div id="departement" class="col-xs-12"></div>                    
+									<div id="interviewsex-chart" class="col-xs-12"></div>                    
 								</div>   
 								<div class="col-md-6" align="middle">
 									<h4><gb>Commune</gb></h4>
-									<div id="commune" class="col-xs-12"></div>  
+									<<div id="interviewsex-chart" class="col-xs-12"></div>  
 								</div>	
 							</div>	
 							<div class="row">
 								<div class="col-xs-6" align="middle">
 									<h4><gb>Etat des activités</gb></h4>
-									<div id="etat" class="col-md-12"></div>                    
+									<div id="interviewsex-chart" class="col-md-12"></div>                    
 								</div>   
 								<div class="col-xs-6" align="middle">	
 									<h4><gb>Population Bénéficiaire</gb></h4>
-									<div id="activity" class="col-md-12"></div>   	
+									<div id="interviewsex-chart" class="col-md-12"></div>   	
 								</div>	
 							</div>
 							
 					</div>
 					<div class="col-md-3" align="middle">
 							<h4><gb>Bailleur</gb></h4>	
-							<div id="bailleur" ></div>
+							<div id="interviewsex-chart"></div>
 							<div class="row" align="middle"></div>	
 							
 					</div>
@@ -1430,21 +1430,21 @@ commune_chart.width(270).height(350)
                 .debug(false);
 
         niveaudevieChart
-                .width(360)
+                .width(160)
                 .height(180)
-                .margins({top: 40, right: 50, bottom: 30, left:50})
+                .margins({top: 40, right: 50, bottom: 30, left:60})
                 .dimension(years)
                 .group(crimeIncidentByYear, "Non-Violent Crime")
                 .valueAccessor(function(d) {
                     return d.value.nonViolentCrimeAvg;
                 })
                 .stack(crimeIncidentByYear, "Violent Crime", function(d){return d.value.violentCrimeAvg;})
-                .x(d3.scale.linear().domain([2010, 2012]))
+                .x(d3.scale.linear().domain([2009, 2012]))
                 .renderHorizontalGridLines(true)
                 .centerBar(false)
                 .elasticY(true)
                 .brushOn(false)
-                .legend(dc.legend().x(230).y(10))
+                .legend(dc.legend().x(250).y(10))
                 .title(function(d){
                     return d.key
                             + "\nViolent crime per 100k population: " + Math.round(d.value.violentCrimeAvg)
@@ -1456,7 +1456,7 @@ commune_chart.width(270).height(350)
 	    
 	    
         interviewsexChart
-               .width(360)
+               .width(160)
                 .height(150)
                 .margins({top: 10, right: 50, bottom: 30, left: 60})
                 .dimension(years)
@@ -1464,7 +1464,7 @@ commune_chart.width(270).height(350)
                 .valueAccessor(function(d) {
                     return d.value.homicide;
                 })
-                .x(d3.scale.linear().domain([2010, 2012]))
+                .x(d3.scale.linear().domain([2009, 2012]))
                 .renderHorizontalGridLines(true)
                 .elasticY(true)
                 .brushOn(true)
