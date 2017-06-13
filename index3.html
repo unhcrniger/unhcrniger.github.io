@@ -23,9 +23,7 @@
         div#niveaudevie-chart { 
             float: right;
         }
-div#niveaudevie1-chart { 
-            float: right;
-        }
+
         div#interviewsex-chart {
             float: right;
         }
@@ -887,7 +885,7 @@ div#niveaudevie1-chart {
         </div>
 
 	    
-        <div id="interviewsex-chart">
+        <div id="test">
             <strong>Répartition par sexe (%)</strong>
             <div class="clearfix"></div>
         </div>
@@ -1472,7 +1470,7 @@ commune_chart.width(270).height(350)
                 .title(function(d){
                     return d.key
                             + "\nHomicide incidents: " + Math.round(d.value.homicide);
-                })
+                })``
                 .xAxis().ticks(5).tickFormat(d3.format("d"));
 
         dc.renderAll();
