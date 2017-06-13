@@ -1445,9 +1445,9 @@ commune_chart.width(270).height(350)
                 .x(d3.scale.linear().domain([2008, 2011]))
                 .renderHorizontalGridLines(true)
                 .centerBar(false)
-                .elasticY(false)
-                .brushOn(false)
-                .legend(dc.legend().x(150).y(10))
+                .elasticY(true)
+                .brushOn(true)
+                .legend(dc.legend().x(50).y(10))
                 .title(function(d){
                     return d.key
                             + "\nViolent crime per 100k population: " + Math.round(d.value.violentCrimeAvg)
@@ -1455,9 +1455,7 @@ commune_chart.width(270).height(350)
                 })
                 .xAxis().ticks(5).tickFormat(d3.format("d"));
 
-	
-	    
-	    
+		    	    
         interviewsexChart
                .width(260)
                 .height(150)
@@ -1494,6 +1492,7 @@ d3.csv("morley.csv", function(error, experiments) {
     .height(200)
     .slicesCap(1)
     .innerRadius(0)
+    .margins({top: 40, right: 100, bottom: 30, left: 90})
     .dimension(runDimension)
     .group(speedSumGroup)
    
