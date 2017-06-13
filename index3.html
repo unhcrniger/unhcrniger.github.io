@@ -23,7 +23,9 @@
         div#niveaudevie-chart { 
             float: right;
         }
-
+div#niveaudevie1-chart { 
+            float: right;
+        }
         div#interviewsex-chart {
             float: right;
         }
@@ -883,7 +885,11 @@
             <strong>Evolution de niveau de vie par an</strong>
             <div class="clearfix"></div>
         </div>
-
+<div id="niveaudevie1-chart">
+            <strong>Test affichage</strong>
+            <div class="clearfix"></div>
+        </div>
+	    
         <div id="interviewsex-chart">
             <strong>Répartition par sexe (%)</strong>
             <div class="clearfix"></div>
@@ -1280,7 +1286,7 @@ commune_chart.width(270).height(350)
             .svg(d3.select("#ca-chart svg"));
 
     var niveaudevieChart = dc.barChart("#niveaudevie-chart");
-
+    var niveaudevie1Chart = dc.barChart("#niveaudevie1-chart");
     var interviewsexChart = dc.lineChart("#interviewsex-chart");
 
     function isTotalCrimeRateRecord(v) {
