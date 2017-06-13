@@ -1432,7 +1432,7 @@ commune_chart.width(270).height(350)
         niveaudevieChart
                 .width(360)
                 .height(180)
-                .margins({top: 40, right: 50, bottom: 30, left: 60})
+                .margins({top: 40, right: 50, bottom: 30, left:50})
                 .dimension(years)
                 .group(crimeIncidentByYear, "Non-Violent Crime")
                 .valueAccessor(function(d) {
@@ -1441,10 +1441,10 @@ commune_chart.width(270).height(350)
                 .stack(crimeIncidentByYear, "Violent Crime", function(d){return d.value.violentCrimeAvg;})
                 .x(d3.scale.linear().domain([2010, 2012]))
                 .renderHorizontalGridLines(true)
-                .centerBar(true)
+                .centerBar(false)
                 .elasticY(true)
                 .brushOn(false)
-                .legend(dc.legend().x(250).y(10))
+                .legend(dc.legend().x(230).y(10))
                 .title(function(d){
                     return d.key
                             + "\nViolent crime per 100k population: " + Math.round(d.value.violentCrimeAvg)
