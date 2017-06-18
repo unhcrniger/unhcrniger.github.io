@@ -1467,6 +1467,7 @@ commune_chart.width(270).height(350)
                 }
         );
 
+	d3.json("Geo/us-states.json", function (statesJson) {    
         caChart.width(565)
                 .height(395)
                 .dimension(cities)
